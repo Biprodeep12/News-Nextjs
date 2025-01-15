@@ -1,5 +1,4 @@
 // import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import styles from '../styles/NewsD.module.css';
 
 export default function NewsD({ articles, loading }) {
@@ -12,7 +11,7 @@ export default function NewsD({ articles, loading }) {
           articles.map((article, index) => (
             <div key={index} className={styles.article}>
               {article.urlToImage ? (
-                <Image
+                <img
                   src={article.urlToImage}
                   alt={article.title || 'News Image'}
                   className={styles.articleImage}
