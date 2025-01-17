@@ -1,41 +1,46 @@
+import React, { useState } from 'react';
 import styles from '../styles/Nav.module.css';
 
-import React, { useState } from 'react';
-
 export default function Nav({ setArticles, setLoading }) {
-  const apiKey = 'b9e0fd3b510f4cd4804129c42da28a37';
-  const apiURl = 'https://newsapi.org/v2/everything?q=';
   const [searchValue, setSearchValue] = useState('');
 
-  const checkNews = async (title) => {
+  // Fetch news from the custom API
+  const fetchCustomNews = async (query) => {
+    if (!query) return;
+
     try {
       setLoading(true);
-      const response = await fetch(`${apiURl}${title}&apiKey=${apiKey}`);
+      const response = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
+      if (!response.ok) {
+        throw new Error(`Error fetching data: ${response.statusText}`);
+      }
+
       const data = await response.json();
-      console.log(data);
-      setArticles(data.articles || []);
+      setArticles(data || []);
     } catch (error) {
-      console.error('Error fetching news:', error);
+      console.error('Error fetching custom news:', error);
+      setArticles([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleKeyUp = (e) => {
-    if (e.key === 'Enter') {
-      checkNews(searchValue);
+  const handleKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      fetchCustomNews(searchValue.trim());
     }
   };
 
   return (
-    <nav className={styles.navabar}>
+    <nav className={styles.navbar}>
       <div className={styles.navLogo}>News-Chor</div>
       <input
         type='text'
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         onKeyUp={handleKeyUp}
-        placeholder='Search..'
+        placeholder='Search for news...'
+        className={styles.searchInput}
       />
     </nav>
   );
