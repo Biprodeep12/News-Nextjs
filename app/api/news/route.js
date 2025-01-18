@@ -1,8 +1,15 @@
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
-  const apiKey = 'b9e0fd3b510f4cd4804129c42da28a37';
+  const apiKey = process.env.NEWS_API_KEY;
   const apiURL = `https://newsapi.org/v2/everything`;
+
+  if (!apiKey) {
+    return new Response(
+      JSON.stringify({ error: 'API key is missing in environment variables' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
+    );
+  }
 
   if (!query) {
     return new Response(
@@ -23,12 +30,11 @@ export async function GET(request) {
 
     const data = await response.json();
 
-    // Process the response data if needed (e.g., filter or transform it)
     const processedData = data.articles?.map((article) => ({
       title: article.title,
-      description: article.description,
+      urlToImage: article.urlToImage,
       url: article.url,
-      source: article.source.name,
+      author: article.author,
     }));
 
     return new Response(JSON.stringify(processedData), {

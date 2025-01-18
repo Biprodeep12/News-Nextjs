@@ -1,4 +1,4 @@
-.navabar {
+.navbar {
   width: 100%;
   height: 70px;
   position: fixed;
@@ -14,16 +14,16 @@
   font-family: sans-serif;
   font-size: 35px;
   font-weight: 600;
-  color: white;
+  color: rgb(255, 255, 255);
   padding-left: 10px;
 }
-.navabar input {
+.navbar input {
   align-self: center;
   justify-self: center;
   border-radius: 10px;
   width: 70%;
   border: none;
-  height: 70%;
+  height: 49px;
   padding-left: 10px;
   display: flex;
   justify-content: left;
@@ -31,4 +31,13 @@
   font-size: 25px;
   font-family: sans-serif;
   font-weight: 600;
+  min-width: 280px;
+}
+@media screen and (max-width: 700px) {
+  .navbar {
+    grid-template-columns: 100%;
+  }
+  .navLogo {
+    display: none;
+  }
 }

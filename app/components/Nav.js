@@ -3,8 +3,6 @@ import styles from '../styles/Nav.module.css';
 
 export default function Nav({ setArticles, setLoading }) {
   const [searchValue, setSearchValue] = useState('');
-
-  // Fetch news from the custom API
   const fetchCustomNews = async (query) => {
     if (!query) return;
 
