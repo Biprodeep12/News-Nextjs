@@ -6,7 +6,13 @@ export default function NewsD({ articles, loading }) {
     <div className={styles.NewsDCont}>
       <div id={styles.NewsDContDisplay}>
         {loading ? (
-          <div className={styles.loadingSpinner}></div>
+          <div className={styles.loadingSpinner}>
+            <div className={styles.dot1}></div>
+            <div className={styles.dot2}></div>
+            <div className={styles.dot3}></div>
+            <div className={styles.dot4}></div>
+            <div className={styles.dot5}></div>
+          </div>
         ) : articles.length > 0 ? (
           articles.map((article, index) => (
             <div key={index} className={styles.article}>
