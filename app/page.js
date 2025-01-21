@@ -8,9 +8,16 @@ import NewsD from './components/NewsD';
 export default function Page() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('relevance');
+
   return (
     <>
-      <Nav setArticles={setArticles} setLoading={setLoading} />
+      <Nav
+        setArticles={setArticles}
+        setLoading={setLoading}
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+      />
       <div className={styles.mainContainer}>
         <NewsD articles={articles} loading={loading} />
         <div className={styles.foot}>

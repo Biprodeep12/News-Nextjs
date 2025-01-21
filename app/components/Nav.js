@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/Nav.module.css';
 
-export default function Nav({ setArticles, setLoading }) {
+export default function Nav({
+  setArticles,
+  setLoading,
+  setSelectedSort,
+  selectedSort,
+}) {
   const [searchValue, setSearchValue] = useState('');
   const fetchCustomNews = async (query) => {
     if (!query) return;
@@ -29,6 +34,11 @@ export default function Nav({ setArticles, setLoading }) {
     }
   };
 
+  const toggleStyle = (sortType) => {
+    setSelectedSort(sortType);
+    fetchCustomNews(searchValue.trim());
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.navLogo}>News-Chor</div>
@@ -40,6 +50,22 @@ export default function Nav({ setArticles, setLoading }) {
         placeholder='Search for news...'
         className={styles.searchInput}
       />
+      <div className={styles.toggleheadlines}>
+        <button
+          className={`${styles.relevance} ${
+            selectedSort === 'relevance' ? styles.active : ''
+          }`}
+          onClick={() => toggleStyle('relevance')}>
+          Relevance
+        </button>
+        <button
+          className={`${styles.tophead} ${
+            selectedSort === 'popularity' ? styles.active : ''
+          }`}
+          onClick={() => toggleStyle('popularity')}>
+          Popularity
+        </button>
+      </div>
     </nav>
   );
 }

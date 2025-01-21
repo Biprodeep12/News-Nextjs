@@ -18,9 +18,7 @@ a {
 }
 ::-webkit-scrollbar-track {
   background-color: rgb(193, 192, 192);
-  border-radius: 20px;
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgb(137, 137, 137);
-  border-radius: 20px;
 }

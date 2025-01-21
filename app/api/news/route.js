@@ -1,8 +1,7 @@
-export async function GET(request) {
+export async function GET(request, { selectedSort }) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
   const apiKey = process.env.NEWS_API_KEY;
-  const apiURL = `https://newsapi.org/v2/everything`;
 
   if (!apiKey) {
     return new Response(
@@ -19,9 +18,19 @@ export async function GET(request) {
   }
 
   try {
-    const response = await fetch(
-      `${apiURL}?q=${encodeURIComponent(query)}&apiKey=${apiKey}`,
-    );
+    let apiURL;
+    if (selectedSort === 'relevance') {
+      apiURL = `https://newsapi.org/v2/everything?q=${encodeURIComponent(
+        query,
+      )}&apiKey=${apiKey}`;
+    } else {
+      apiURL = `https://newsapi.org/v2/top-headlines?q=${encodeURIComponent(
+        query,
+      )}&apiKey=${apiKey}`;
+    }
+
+    const response = await fetch(apiURL);
+
     if (!response.ok) {
       throw new Error(
         `Error fetching data: ${response.status} ${response.statusText}`,
@@ -29,6 +38,8 @@ export async function GET(request) {
     }
 
     const data = await response.json();
+
+    console.log(data.articles.length);
 
     const processedData = data.articles?.map((article) => ({
       title: article.title,
