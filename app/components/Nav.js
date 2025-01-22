@@ -40,16 +40,18 @@ export default function Nav({
   };
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navLogo}>News-Chor</div>
-      <input
-        type='text'
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        onKeyUp={handleKeyUp}
-        placeholder='Search for news...'
-        className={styles.searchInput}
-      />
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.navLogo}>News-Chor</div>
+        <input
+          type='text'
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyUp={handleKeyUp}
+          placeholder='Search for news...'
+          className={styles.searchInput}
+        />
+      </nav>
       <div className={styles.toggleheadlines}>
         <button
           className={`${styles.relevance} ${
@@ -66,6 +68,6 @@ export default function Nav({
           Popularity
         </button>
       </div>
-    </nav>
+    </>
   );
 }
